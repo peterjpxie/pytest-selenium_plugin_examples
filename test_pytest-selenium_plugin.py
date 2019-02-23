@@ -13,7 +13,7 @@ Notes:
 - HTML report embedded screenshots for assert failures AND exceptions like element not found!
 - Browser type is defined in pytest.ini and can be overwritten in pytest CLI parameters.
 - setup to start browser, teardown to close browser is already taken care by pytest-selenium plugin framework.
-- webdriver browser and common settings (fixtures) are defined in conftest.py, and you can move here if you like.
+- webdriver browser and common settings (fixtures) are defined in conftest.py, and you can move to test files if you like.
 - Exceptions will cause test to fail and terminate just as assert failure.
 '''
 from time import sleep
