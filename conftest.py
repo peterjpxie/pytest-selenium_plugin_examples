@@ -2,8 +2,8 @@
 import pytest
 @pytest.fixture
 def selenium(selenium):
-    selenium.implicitly_wait(15)
-    # selenium.maximize_window()
+    selenium.implicitly_wait(10)
+    selenium.maximize_window()
     return selenium 
 
 # configure firefox options, i.e. headless   
@@ -14,6 +14,7 @@ def firefox_options(firefox_options):
     return firefox_options               
                 
 # configure Chrome options, i.e. headless   
+# https://seleniumhq.github.io/selenium/docs/api/py/webdriver_chrome/selenium.webdriver.chrome.options.html
 @pytest.fixture
 def chrome_options(chrome_options):
     # chrome_options.add_argument("--headless")
