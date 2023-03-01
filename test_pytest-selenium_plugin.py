@@ -4,10 +4,7 @@ Description:
     https://pytest-selenium.readthedocs.io/en/latest/user_guide.html
 
 Install:
-pip3 install -U pytest
-pip3 install -U selenium
-pip3 install -U pytest-html
-pip3 install -U pytest-selenium
+pip3 install -r requirements.txt
 
 Notes:
 - HTML report embedded screenshots for assert failures AND exceptions like element not found!
@@ -30,7 +27,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # import inspect
 
 # explicit wait time after loading a new page to check page match.
-TIMEWAIT_PAGE_LOAD = 5
+TIMEWAIT_PAGE_LOAD = 3
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s ln-%(lineno)d %(levelname)s: %(message)s', datefmt='%Y-%m-%d %I:%M:%S')
 # logging.basicConfig(level=logging.INFO,filename = 'debug.log',format='%(asctime)s line-%(lineno)d %(levelname)s: %(message)s', datefmt='%Y-%m-%d %I:%M:%S') # write to a log file
@@ -104,9 +101,8 @@ class PyPiHomepage():
         self.wd = webdrive   
     
     def is_page_matched(self):
-        # return self.wd.title == 'PyPI – the Python Package Index · PyPI'
         try:
-            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until( EC.title_is('PyPI – the Python Package Index · PyPI' ))
+            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until( EC.title_is('Search results · PyPI' ))
         except:
             ret = False
         return ret
@@ -138,7 +134,8 @@ class PyPiSearchResultPage():
         self.result_index = index
         elem_found = True
         try:
-            self.elem = self.wd.find_element_by_xpath( '//*[@id="content"]/section/div/div[2]/form/section[2]/ul/li[%s]//span[1]' % self.result_index)
+            self.elem = self.wd.find_element_by_xpath('//*[@id="content"]/div/div/div[2]/form/div[3]/ul/li[%s]/a/h3/span[1]' 
+                                                      % self.result_index)
         except NoSuchElementException:
             log.info('Search result row not found.')
             elem_found = False
@@ -148,10 +145,4 @@ class PyPiSearchResultPage():
             log.info('elem text:'+ self.elem.text)
             return self.elem.text
  
-    
-def disable_test_temp(selenium):
-    selenium.get('https://www.seleniumhq.org/')
-    # elem = selenium.find_element_by_name('not exist')
-    log.info('test logging')
-    assert 'Selenium - Web Browser Automation1' == selenium.title
     

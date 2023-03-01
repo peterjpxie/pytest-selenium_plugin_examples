@@ -2,7 +2,7 @@
 import pytest
 @pytest.fixture
 def selenium(selenium):
-    selenium.implicitly_wait(10)
+    selenium.implicitly_wait(5)
     selenium.maximize_window()
     return selenium 
 
