@@ -29,9 +29,26 @@ from selenium.webdriver.support import expected_conditions as EC
 # explicit wait time after loading a new page to check page match.
 TIMEWAIT_PAGE_LOAD = 3
 
-logging.basicConfig(level=logging.INFO,format='%(asctime)s ln-%(lineno)d %(levelname)s: %(message)s', datefmt='%Y-%m-%d %I:%M:%S')
-# logging.basicConfig(level=logging.INFO,filename = 'debug.log',format='%(asctime)s line-%(lineno)d %(levelname)s: %(message)s', datefmt='%Y-%m-%d %I:%M:%S') # write to a log file
-log = logging.getLogger('')
+# %(levelname)7s to align 7 bytes to right, %(levelname)-7s to left.
+common_formatter = logging.Formatter(
+    "%(asctime)s [%(levelname)-7s][%(lineno)-3d]: %(message)s",
+    datefmt="%Y-%m-%d %I:%M:%S",
+)
+
+# Note: To create multiple log files, must use different logger name.
+def setup_logger(log_file, level=logging.INFO, name="", formatter=common_formatter):
+    """Function setup as many loggers as you want."""
+    handler = logging.FileHandler(log_file, mode="w")  # default mode is append
+    # Or use a rotating file handler
+    # handler = RotatingFileHandler(log_file,maxBytes=1024, backupCount=5)
+    handler.setFormatter(formatter)
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+    return logger
+
+# default debug logger
+log = setup_logger("debug.log", logging.INFO, name=__name__)
     
 # Page Object Model            
 class TestPythonOrgPageModel():
@@ -88,7 +105,7 @@ class PythonOrgHomepage():
     def click_pypi(self):
         # Catch find element failure to get better reading log prints 
         try:
-            elem = self.wd.find_element_by_xpath('//*[@title="Python Package Index"]')
+            elem = self.wd.find_element_by_xpath('//*[@title="Python Package Index"]')            
         except NoSuchElementException:
             log.info('Failed to locate PyPi link.')
             return None
@@ -102,14 +119,14 @@ class PyPiHomepage():
     
     def is_page_matched(self):
         try:
-            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until( EC.title_is('Search results · PyPI' ))
+            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until(EC.title_is('Search results · PyPI' ))
         except:
             ret = False
         return ret
         
     def searchPackage(self,searchText):       
         self.wd.find_element_by_id("search").clear()
-        self.wd.find_element_by_id("search").send_keys("%s" % str(searchText).strip())
+        self.wd.find_element_by_id("search").send_keys(str(searchText).strip())
         self.wd.find_element_by_id("search").send_keys(Keys.ENTER)
         # wait for page to load, find an element on next page, order dropdown in this case. --- Removed and move to is_page_matched with wait-until function in next Page 
         # wait_element_nextPage = self.wd.find_element_by_xpath('//*[@id="order"]')
