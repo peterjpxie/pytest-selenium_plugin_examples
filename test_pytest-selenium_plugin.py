@@ -150,7 +150,7 @@ class PyPiSearchResultPage():
         self.result_index = index
         elem_found = True
         try:
-            self.elem = self.wd.find_element("xpath",'//*[@id="content"]/div/div/div[2]/form/div[3]/ul/li[%s]/a/h3/span[1]' 
+            self.elem = self.wd.find_element(By.XPATH,'//*[@id="content"]/div/div/div[2]/form/div[3]/ul/li[%s]/a/h3/span[1]' 
                                                       % self.result_index)
         except NoSuchElementException:
             log.info('Search result row not found.')
