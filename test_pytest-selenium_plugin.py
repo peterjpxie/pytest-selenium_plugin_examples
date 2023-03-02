@@ -155,7 +155,8 @@ class PyPiSearchResultPage():
         except NoSuchElementException:
             log.info('Search result row not found.')
             elem_found = False
-            return None   
+            return None
+           
         if elem_found == True:
             log.info('Found search result row .')
             log.info('elem text:'+ self.elem.text)
