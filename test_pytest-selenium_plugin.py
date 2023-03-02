@@ -161,5 +161,3 @@ class PyPiSearchResultPage():
             log.info('Found search result row .')
             log.info('elem text:'+ self.elem.text)
             return self.elem.text
- 
-    
