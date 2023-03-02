@@ -1,4 +1,4 @@
-selenium>=3.141.0
+selenium>=4.8.2
 pytest
 pytest-html>=1.20.0
 pytest-selenium

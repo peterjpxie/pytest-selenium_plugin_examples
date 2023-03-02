@@ -18,8 +18,8 @@ from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import logging
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.common.by import By       
+from selenium.common.exceptions import NoSuchElementException, TimeoutException    
+from selenium.webdriver.common.by import By   
 #from selenium.webdriver.support.events import EventFiringWebDriver
 #from selenium.webdriver.support.events import AbstractEventListener
 from selenium.webdriver.support.ui import WebDriverWait
@@ -105,7 +105,8 @@ class PythonOrgHomepage():
     def click_pypi(self):
         # Catch find element failure to get better reading log prints 
         try:
-            elem = self.wd.find_element_by_xpath('//*[@title="Python Package Index"]')            
+            # elem = self.wd.find_element_by_xpath('//*[@title="Python Package Index"]')  
+            elem = self.wd.find_element("xpath", '//*[@title="Python Package Index"]')          
         except NoSuchElementException:
             log.info('Failed to locate PyPi link.')
             return None
@@ -119,17 +120,15 @@ class PyPiHomepage():
     
     def is_page_matched(self):
         try:
-            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until(EC.title_is('Search results · PyPI' ))
+            ret = WebDriverWait(self.wd, TIMEWAIT_PAGE_LOAD).until(EC.title_is('PyPI · The Python Package Index' ))
         except:
             ret = False
         return ret
         
-    def searchPackage(self,searchText):       
-        self.wd.find_element_by_id("search").clear()
-        self.wd.find_element_by_id("search").send_keys(str(searchText).strip())
-        self.wd.find_element_by_id("search").send_keys(Keys.ENTER)
-        # wait for page to load, find an element on next page, order dropdown in this case. --- Removed and move to is_page_matched with wait-until function in next Page 
-        # wait_element_nextPage = self.wd.find_element_by_xpath('//*[@id="order"]')
+    def searchPackage(self,searchText):
+        self.wd.find_element(By.ID,"search").clear()
+        self.wd.find_element(By.ID,"search").send_keys(str(searchText).strip())
+        self.wd.find_element(By.ID,"search").send_keys(Keys.ENTER)
         return PyPiSearchResultPage(self.wd)
 
 class PyPiSearchResultPage(): 
@@ -151,7 +150,7 @@ class PyPiSearchResultPage():
         self.result_index = index
         elem_found = True
         try:
-            self.elem = self.wd.find_element_by_xpath('//*[@id="content"]/div/div/div[2]/form/div[3]/ul/li[%s]/a/h3/span[1]' 
+            self.elem = self.wd.find_element("xpath",'//*[@id="content"]/div/div/div[2]/form/div[3]/ul/li[%s]/a/h3/span[1]' 
                                                       % self.result_index)
         except NoSuchElementException:
             log.info('Search result row not found.')
