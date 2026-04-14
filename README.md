@@ -14,6 +14,10 @@ Along with pytest-html, which demonstrates the following features:
 
 `pip install -U pytest selenium pytest-html pytest-selenium`
 
+or 
+
+`pip install -r requirements.txt`
+
 3. Download WebDriver executables
 
 Download WebDriver executables for your respective browsers under test, e.g. [chromedriver](https://chromedriver.chromium.org/downloads), [Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/) and [Firefox webdriver](https://github.com/mozilla/geckodriver/releases), to a path (e.g. d:/webdriver/) and add this path to system path so that the WebDriver executables can be called anywhere. 
@@ -21,4 +25,11 @@ Download WebDriver executables for your respective browsers under test, e.g. [ch
 # Run
 Download the code, and run 'pytest' in the same folder. More options are defined in pytest.ini or you can overwrite in CLI parameters.
 
-`pytest`
+```
+# run test
+pytest
+
+# overwrite browser type
+pytest --driver Chrome
+```
+

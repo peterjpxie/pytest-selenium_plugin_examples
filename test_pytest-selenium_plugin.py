@@ -2,6 +2,8 @@
 Description:
     A pytest-selenium plugin example, perfect framework to work with pytest html plugin for HTML reports with screenshots.
     https://pytest-selenium.readthedocs.io/en/latest/user_guide.html
+    > The pytest-selenium plugin provides a function scoped selenium pytest fixture for your tests. 
+    This means that any test with selenium as an argument will cause a browser instance to be invoked.
 
 Install:
 pip3 install -r requirements.txt
