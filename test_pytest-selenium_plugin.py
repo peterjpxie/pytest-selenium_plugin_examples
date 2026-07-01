@@ -63,6 +63,8 @@ class TestPythonOrgPageModel():
         assert homepage.is_page_matched()
         # Test Validations 
         # assert homepage.getTitle() == 'Failed Title'
+        # Note: Protected by captcha with fastly now.
+        """
         pyPiHomepage = homepage.click_pypi()
         # Check it redirects to PyPi website.
         assert pyPiHomepage.is_page_matched()
@@ -74,7 +76,8 @@ class TestPythonOrgPageModel():
         check_result_row = 1
         expected_resultText = 'selenium99'
         actual_resultText = searchResultPage.getSearchResultText(check_result_row) 
-        assert actual_resultText == expected_resultText, 'search result not matched'        
+        assert actual_resultText == expected_resultText, 'search result not matched'   
+        """     
 
 # Page Object design 
 # https://www.seleniumhq.org/docs/06_test_design_considerations.jsp#page-object-design-pattern (Java Example only)
