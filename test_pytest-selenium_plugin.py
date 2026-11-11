@@ -24,12 +24,12 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By   
 #from selenium.webdriver.support.events import EventFiringWebDriver
 #from selenium.webdriver.support.events import AbstractEventListener
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # import inspect
 
 # explicit wait time after loading a new page to check page match.
-TIMEWAIT_PAGE_LOAD = 3
+TIMEWAIT_PAGE_LOAD = 10
 
 # %(levelname)7s to align 7 bytes to right, %(levelname)-7s to left.
 common_formatter = logging.Formatter(
@@ -106,15 +106,15 @@ class PythonOrgHomepage():
     def getTitle(self):
         return self.wd.title
     
-    # return None if there are exceptions
     def click_pypi(self):
         # Catch find element failure to get better reading log prints 
         try:
-            # elem = self.wd.find_element_by_xpath('//*[@title="Python Package Index"]')  
             elem = self.wd.find_element("xpath", '//*[@title="Python Package Index"]')          
         except NoSuchElementException:
-            log.info('Failed to locate PyPi link.')
-            return None
+            # exception will automatically append current exception trackback, same as adding traceback.format_exc() manually.
+            log.exception('Failed to locate PyPi link.')
+            # re-raise the exception
+            raise
             
         elem.click()
         return PyPiHomepage(self.wd)

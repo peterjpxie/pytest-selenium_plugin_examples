@@ -2,6 +2,7 @@
 *.log
 assets
 *.png
+*.html
 
 ######## python template ######
 # Byte-compiled / optimized / DLL files
