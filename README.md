@@ -29,3 +29,5 @@ pytest
 pytest --driver Chrome
 ```
 
+# config
+headless configuration is in `conftest.py` per driver.
